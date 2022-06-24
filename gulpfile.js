@@ -44,6 +44,7 @@ function pug() {
         .pipe(gulpPug())
         .pipe(htmlmin())
         .pipe(gulp.dest(paths.pug.dist))
+        .pipe(browserSync.stream());
 }
 
 function styles() {
@@ -53,6 +54,7 @@ function styles() {
         .pipe(autoprefixer())
         .pipe(cssmin())
         .pipe(gulp.dest(paths.styles.dist))
+        .pipe(browserSync.stream());
 }
 
 function scripts() {
@@ -65,6 +67,7 @@ function scripts() {
         )
         .pipe(jsmin())
         .pipe(gulp.dest(paths.scripts.dist))
+        .pipe(browserSync.stream());
 }
 
 function images() {
@@ -72,6 +75,7 @@ function images() {
         .src(paths.img.src)
         .pipe(webp())
         .pipe(gulp.dest(paths.img.dist))
+        .pipe(browserSync.stream());
 }
 
 function data() {
@@ -89,14 +93,12 @@ function watch() {
     gulp.watch(paths.pug.src, pug);
     gulp.watch(paths.styles.src, styles);
     gulp.watch(paths.scripts.src, scripts);
-    gulp.watch(paths.img.src, images);
-    gulp.watch(paths.data.src, data);
 }
 
 const build = gulp.series(
     clean,
     pug,
-    gulp.parallel(styles, scripts, images, data),
+    gulp.parallel(styles, scripts, ),
     watch
 );
 
@@ -104,6 +106,4 @@ exports.clean = clean;
 exports.pug = pug;
 exports.styles = styles;
 exports.scripts = scripts;
-exports.images = images;
-exports.data = data;
 exports.default = build;
