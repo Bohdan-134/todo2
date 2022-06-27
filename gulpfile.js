@@ -60,11 +60,11 @@ function styles() {
 function scripts() {
     return gulp
         .src(paths.scripts.src)
-        .pipe(
+        /* .pipe(
             babel({
                 presets: ["@babel/env"],
             })
-        )
+        ) */
         .pipe(jsmin())
         .pipe(gulp.dest(paths.scripts.dist))
         .pipe(browserSync.stream());
